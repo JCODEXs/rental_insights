@@ -106,7 +106,7 @@ export async function getMonthlySummaries() {
 }
 // actions/stays.ts
 export async function getStayById(id: string) {
-  const stay = await Stay.findById(id).lean();
+  const stay = await Stay.findById(id)
   if (!stay) return null;
 
   return {
