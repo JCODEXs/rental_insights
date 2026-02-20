@@ -45,8 +45,13 @@ export default function ConsumibleForm({ initialData }: { initialData?: any }) {
   }, [initialData, setValue]);
 
   const onSubmit = async (data: ConsumableFormData) => {
-    const action = isEdit ? updateConsumable : createConsumable;
-    const result = isEdit ? await action(initialData._id, data) : await action(data);
+    let result;
+
+  if (isEdit) {
+    result = await updateConsumable(initialData._id, data);
+  } else {
+    result = await createConsumable(data);
+  }
 
     if (result.success) {
       router.push('/consumibles');
