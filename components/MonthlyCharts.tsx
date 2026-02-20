@@ -32,7 +32,7 @@ export default function MonthlyCharts({ report }: Props) {
       type: 'pie',
       radius: ['40%', '70%'],
       data: [
-        { value: report.byCategory.limpieza, name: 'Limpieza + Lavandería' },
+        { value: report.byCategory.limpieza, name: 'Limpieza' },
         { value: report.byCategory.consumibles, name: 'Consumibles' },
         { value: report.byCategory.otros, name: 'Otros Gastos' },
       ],

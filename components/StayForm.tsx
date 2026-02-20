@@ -348,7 +348,7 @@ const updateConsumableQty = (index: number, newQty: number) => {
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label>Costo total de limpieza + lavandería</Label>
+                  <Label>Costo total de limpieza </Label>
                   <Input type="number" {...register('cleaningCost', { valueAsNumber: true })} placeholder="Ej: 80000" />
                 </div>
               </div>

@@ -16,6 +16,8 @@ import ExportAllToPDF from '@/components/AllStaysPDF';
 export default async function EstanciasPage() {
   const stays = await getAllStays();
   const monthlySummaries = await getMonthlySummaries();
+  // console.log(monthlySummaries,"monthlySummaries")
+  // console.log(stays,"stays")
 
   // Ordenamos por fecha descendente
   const sortedStays = stays.sort((a: any, b: any) => 
@@ -31,7 +33,7 @@ export default async function EstanciasPage() {
   });
 
   const monthKeys = Object.keys(staysByMonth).sort((a, b) => b.localeCompare(a));
-  console.log(new Date(monthKeys[2]).getMonth());
+  // console.log(new Date(monthKeys[2]).getMonth());
 
   return (
     <div className="container mx-auto py-10 max-w-7xl">
@@ -152,6 +154,10 @@ export default async function EstanciasPage() {
                             <div className="flex justify-between">
                               <span className="text-muted-foreground">Gastos totales</span>
                               <span className="text-red-600">-${stay.totalCost.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground">Gastos de limpieza</span>
+                              <span className="text-red-600">-${stay.cleaningCost.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between text-lg font-bold">
                               <span className="flex items-center gap-2">

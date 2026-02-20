@@ -10,7 +10,13 @@ export async function getAllConsumables() {
 }
 
 export async function getConsumableById(id: string) {
-  return await Consumable.findById(id);
+  const consumable = await Consumable.findById(id).lean();
+  if (!consumable) return null;
+  return {
+    ...consumable,
+    _id: consumable._id.toString(),
+  };
+
 }
 
 export async function createConsumable(data: any) {

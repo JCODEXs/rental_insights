@@ -18,8 +18,24 @@ import ExportPDFButton from '@/components/StayPDF';
 export default async function StayDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const {id}=  await params
   const stay = await getStayById(id);
-console.log(stay,"stay")
+// console.log(stay,"stay")
   if (!stay) notFound();
+
+  const startDate = new Date(stay.startDate)
+const endDate = new Date(stay.endDate)
+
+const formattedStart = format(
+  new Date(startDate.toISOString()),
+  "dd 'de' MMMM",
+  { locale: es }
+)
+
+const formattedEnd = format(
+  new Date(endDate.toISOString()),
+  "dd 'de' MMMM yyyy",
+  { locale: es }
+)
+
 
   return (
     <div className="container mx-auto py-10 max-w-5xl">
@@ -61,10 +77,9 @@ console.log(stay,"stay")
               <div className="flex justify-between items-start">
                 <div>
                   <CardTitle className="text-3xl">{stay.guestName}</CardTitle>
-                  <p className="text-lg text-muted-foreground mt-2">
-                    {format(new Date(stay.startDate), "dd 'de' MMMM", { locale: es })} →{' '}
-                    {format(new Date(stay.endDate), "dd 'de' MMMM yyyy", { locale: es })}
-                  </p>
+                 <p className="text-lg text-muted-foreground mt-2">
+  {formattedStart} → {formattedEnd}
+</p>
                 </div>
                 <Badge variant={stay.channel === 'directo' ? 'default' : 'secondary'} className="text-lg px-4">
                   {stay.channel.toUpperCase()}
@@ -127,7 +142,7 @@ console.log(stay,"stay")
                 <div className="bg-red-50 rounded-lg p-6">
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span>Limpieza + lavandería</span>
+                      <span>Limpieza </span>
                       <span className="font-medium">${stay.cleaningCost.toLocaleString()}</span>
                     </div>
                     {stay.consumables.length > 0 && (

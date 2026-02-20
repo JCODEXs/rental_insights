@@ -66,7 +66,7 @@ const StayPDF = ({ stay }: StayPDFProps) => (
       {/* Gastos */}
       <View style={styles.section}>
         <Text style={styles.subtitle}>Gastos Detallados</Text>
-        <View style={styles.row}><Text style={styles.label}>Limpieza + lavandería:</Text><Text style={styles.value}>${stay.cleaningCost.toLocaleString()}</Text></View>
+        <View style={styles.row}><Text style={styles.label}>Limpieza :</Text><Text style={styles.value}>${stay.cleaningCost.toLocaleString()}</Text></View>
 
         {stay.consumables.length > 0 && (
           <>

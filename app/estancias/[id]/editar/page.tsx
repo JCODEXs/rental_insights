@@ -6,7 +6,7 @@ import { getStayById } from '@/actions/stays';
 export default async function EditStayPage({ params }: { params: { id: string } }) {
     const {id}=  await params
   const stay = await getStayById(id);
-console.log(stay)
+// console.log(stay)
   if (!stay) notFound();
 
   return (

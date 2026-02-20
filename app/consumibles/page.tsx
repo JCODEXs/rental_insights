@@ -48,7 +48,7 @@ export default async function ConsumiblesPage() {
                   </span>
                 </div>
                 <div className="flex gap-2 pt-4">
-                  <Link href={`/consumibles/nuevo?id=${c._id}`}>
+                  <Link href={`/consumibles/${c._id}`}>
                     <Button size="sm" variant="outline">
                       <Edit className="w-4 h-4 mr-1" />
                       Editar
