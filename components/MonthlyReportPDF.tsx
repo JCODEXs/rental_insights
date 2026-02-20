@@ -116,8 +116,8 @@ export default function ExportMonthlyPDF({ report, year, month }: { report: any;
         <ReactECharts ref={chart2Ref} option={report.pieOption} style={{ height: 400 }} />
       </div>
 
-      <Button onClick={generatePDF} disabled={generating} size="lg" className="w-full">
-        {generating ? (
+      <Button onClick={generatePDF} disabled={report.generating} size="lg" className="w-full">
+        {report.generating ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
             Generando PDF completo...
