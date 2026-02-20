@@ -42,7 +42,7 @@ export const staySchema = z.object({
 
   totalCost: z.number(),
   profit: z.number(),
-  profitMargin: z.number().optional(),
+  profitMargin: z.number(),
 
   notes: z.string().optional(),
 });

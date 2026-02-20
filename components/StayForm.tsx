@@ -56,26 +56,27 @@ export default function StayForm({ initialData, isEdit }: { initialData?: any; i
   };
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<StayFormData>({
-    resolver: zodResolver(staySchema),
-    defaultValues: initialData || {
-      channel: 'airbnb',
-      status: 'completed',
-      grossRevenue: 0,
-      platformFee: 0,
-      cleaningFeeCharged: 0,
-      cleaningCost: 0,
-      consumables: [],
-      otherExpenses: [],
-      notes: '',
-    },
-  });
+const {
+  register,
+  handleSubmit,
+  watch,
+  setValue,
+  formState: { errors },
+} = useForm<StayFormData>({
+  resolver: zodResolver<StayFormData>(staySchema),
+  defaultValues: initialData || {
+    channel: 'airbnb',
+    status: 'completed',
+    grossRevenue: 0,
+    platformFee: 0,
+    cleaningFeeCharged: 0,
+    cleaningCost: 0,
+    consumables: [],
+    otherExpenses: [],
+    notes: '',
+  },
+});
+
 
   const startDate = watch('startDate');
   const endDate = watch('endDate');
