@@ -1,14 +1,14 @@
 // lib/schemas.ts
 import { z } from 'zod';
-const dateSchema = z.preprocess(
-  (arg) => {
-    if (typeof arg == "string" || arg instanceof Date) {
-      return new Date(arg);
-    }
-    return arg; 
-  },
-  z.date()
-);
+// const dateSchema = z.preprocess(
+//   (arg) => {
+//     if (typeof arg == "string" || arg instanceof Date) {
+//       return new Date(arg);
+//     }
+//     return arg; 
+//   },
+//   z.date()
+// );
 
 export const staySchema = z.object({
   guestName: z.string().min(2, 'Nombre muy corto'),
@@ -16,8 +16,8 @@ export const staySchema = z.object({
   channel: z.enum(['airbnb', 'booking', 'directo', 'otros']),
   status: z.enum(['reserved', 'ongoing', 'completed', 'cancelled']).optional(),
 
-  startDate: dateSchema,
-  endDate: dateSchema ,
+  startDate: z.coerce.date(),
+  endDate: z.coerce.date(),
   nights: z.number().min(0),
   guests: z.number().min(1),
 
