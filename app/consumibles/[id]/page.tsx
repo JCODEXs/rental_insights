@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ConsumibleForm from '@/components/ConsumibleForm';
 import { getConsumableById } from '@/actions/consumables';
 
