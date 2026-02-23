@@ -21,7 +21,7 @@ export async function dbConnect() {
 
   if (!cached.promise) {
     const opts = { bufferCommands: false };
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((m) => m);
+    cached.promise = mongoose.connect(MONGODB_URI, opts);
   }
   cached.conn = await cached.promise;
   return cached.conn;
@@ -166,4 +166,4 @@ export const Stay = mongoose.models.Stay || mongoose.model<IStay>('Stay', StaySc
 // =============================================
 // CONEXIÓN AUTOMÁTICA AL INICIAR LA APP
 // =============================================
-dbConnect().catch((err) => console.error('Error conectando a MongoDB:', err));
+// dbConnect().catch((err) => console.error('Error conectando a MongoDB:', err));

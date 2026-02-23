@@ -1,4 +1,5 @@
 // app/api/consumables/route.ts
+
 import { NextResponse } from 'next/server';
 import { Consumable } from '@/lib/mongodb';
 
