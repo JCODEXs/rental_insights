@@ -2,7 +2,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { Consumable } from '@/lib/mongodb';
+import { Consumable,dbConnect } from '@/lib/mongodb';
 import { consumableSchema } from '@/lib/schemas';
 
 export async function getAllConsumables() {
@@ -10,6 +10,7 @@ export async function getAllConsumables() {
 }
 
 export async function getConsumableById(id: string) {
+  await dbConnect()
   const consumable = await Consumable.findById(id)
   if (!consumable) return null;
   return {
@@ -22,6 +23,7 @@ export async function getConsumableById(id: string) {
 export async function createConsumable(data: any) {
   try {
     const validated = consumableSchema.parse(data);
+    await dbConnect()
     await Consumable.create(validated);
     revalidatePath('/consumibles');
     return { success: true };
@@ -33,6 +35,7 @@ export async function createConsumable(data: any) {
 export async function updateConsumable(id: string, data: any) {
   try {
     const validated = consumableSchema.parse(data);
+    await dbConnect()
     await Consumable.findByIdAndUpdate(id, validated);
     revalidatePath('/consumibles');
     return { success: true };
@@ -42,6 +45,7 @@ export async function updateConsumable(id: string, data: any) {
 }
 
 export async function deleteConsumable(formData: FormData) {
+  await dbConnect()
   const id = formData.get('id') as string;
   await Consumable.findByIdAndUpdate(id, { isActive: false });
   revalidatePath('/consumibles');
