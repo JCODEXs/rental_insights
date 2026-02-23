@@ -1,4 +1,5 @@
 // lib/reports.ts
+import { Stay } from '@/lib/mongodb';
 export async function getMonthlyReport(year: number, month: number) {
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month, 0, 23, 59, 59);
