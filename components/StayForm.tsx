@@ -63,7 +63,7 @@ const {
   setValue,
   formState: { errors },
 } = useForm<StayFormData>({
-  resolver: zodResolver<StayFormData>(staySchema),
+  resolver: zodResolver(staySchema),
   defaultValues: initialData || {
     channel: 'airbnb',
     status: 'completed',
