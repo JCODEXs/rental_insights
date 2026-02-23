@@ -1,4 +1,5 @@
-// app/dashboard/mensual/page.tsx
+
+export const dynamic = "force-dynamic";// app/dashboard/mensual/page.tsx
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

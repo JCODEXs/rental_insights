@@ -1,4 +1,6 @@
+export const dynamic = "force-dynamic";
 // app/estancias/page.tsx
+
 import Link from 'next/link';
 import { format, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { es } from 'date-fns/locale';
