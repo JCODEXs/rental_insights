@@ -2,7 +2,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { Consumable,dbConnect } from '@/lib/mongodb';
+import { Consumable,dbConnect, IConsumable } from '@/lib/mongodb';
 import { consumableSchema } from '@/lib/schemas';
 
 export async function getAllConsumables() {
@@ -12,10 +12,10 @@ export async function getAllConsumables() {
 
 export async function getConsumableById(id: string) {
   await dbConnect()
-  const consumable = await Consumable.findById(id)
+  const consumable = await Consumable.findById(id).lean<IConsumable>()
   if (!consumable) return null;
   return {
-    ...consumable.lean(),
+    ...consumable,
     _id: consumable._id.toString(),
   };
 

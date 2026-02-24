@@ -3,7 +3,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { staySchema, type StayFormData } from '@/lib/schemas';
-import { Stay,dbConnect } from '@/lib/mongodb'; // <-- este archivo lo creamos en el paso 3
+import { IConsumable, IStay, Stay,dbConnect } from '@/lib/mongodb'; // <-- este archivo lo creamos en el paso 3
 import { redirect } from 'next/navigation';
 
 export async function createStay(data: StayFormData) {
@@ -110,8 +110,8 @@ export async function getMonthlySummaries() {
 // actions/stays.ts
 export async function getStayById(id: string) {
   await dbConnect()
-  const stay = await Stay.findById(id).lean()
-  console.log(stay,"stay")
+  const stay = await Stay.findById(id).lean<IStay>()
+  // console.log(stay,"stay")
   if (!stay) return null;
 
   return {
@@ -143,7 +143,7 @@ export async function getStayById(id: string) {
 
 export async function deleteStay(formData: FormData) {
   await dbConnect()
- 
+
   const id = formData.get('id') as string;
   await Stay.findByIdAndDelete(id);
   redirect('/estancias')
