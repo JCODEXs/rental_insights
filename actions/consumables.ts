@@ -6,12 +6,13 @@ import { Consumable,dbConnect } from '@/lib/mongodb';
 import { consumableSchema } from '@/lib/schemas';
 
 export async function getAllConsumables() {
+  await dbConnect()
   return await Consumable.find({ isActive: true }).sort({ name: 1 });
 }
 
 export async function getConsumableById(id: string) {
   await dbConnect()
-  const consumable = await Consumable.findById(id)
+  const consumable = await Consumable.findById(id).lean();
   if (!consumable) return null;
   return {
     ...consumable,

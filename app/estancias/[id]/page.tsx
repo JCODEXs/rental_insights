@@ -18,7 +18,7 @@ import ExportPDFButton from '@/components/StayPDF';
 export default async function StayDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const {id}=  await params
   const stay = await getStayById(id);
-// console.log(stay,"stay")
+console.log(stay,"stay")
   if (!stay) notFound();
 
   const startDate = new Date(stay.startDate)
@@ -105,7 +105,7 @@ const formattedEnd = format(
                 <div>
                   <p className="text-sm text-muted-foreground">Ingreso por noche</p>
                   <p className="text-2xl font-bold">
-                    ${(stay.netRevenue / stay.nights).toFixed(0).toLocaleString()}
+                    ${(stay.netRevenue / stay.nights)?.toFixed(0)?.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -116,22 +116,22 @@ const formattedEnd = format(
               <div className="bg-gray-50 rounded-lg p-6 space-y-4">
                 <div className="flex justify-between text-lg">
                   <span>Ingreso bruto</span>
-                  <span className="font-semibold">${stay.grossRevenue.toLocaleString()}</span>
+                  <span className="font-semibold">${stay.grossRevenue?.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-lg">
                   <span className="text-red-600">- Comisión plataforma</span>
-                  <span className="text-red-600">-${stay.platformFee.toLocaleString()}</span>
+                  <span className="text-red-600">-${stay.platformFee?.toLocaleString()}</span>
                 </div>
                 {stay.cleaningFeeCharged > 0 && (
                   <div className="flex justify-between text-lg">
                     <span>+ Cargo limpieza huésped</span>
-                    <span className="text-green-600">+${stay.cleaningFeeCharged.toLocaleString()}</span>
+                    <span className="text-green-600">+${stay.cleaningFeeCharged?.toLocaleString()}</span>
                   </div>
                 )}
                 <Separator />
                 <div className="flex justify-between text-2xl font-bold">
                   <span>Ingreso Neto</span>
-                  <span className="text-blue-600">${stay.netRevenue.toLocaleString()}</span>
+                  <span className="text-blue-600">${stay.netRevenue?.toLocaleString()}</span>
                 </div>
               </div>
 
@@ -143,7 +143,7 @@ const formattedEnd = format(
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span>Limpieza </span>
-                      <span className="font-medium">${stay.cleaningCost.toLocaleString()}</span>
+                      <span className="font-medium">${stay.cleaningCost?.toLocaleString()}</span>
                     </div>
                     {stay.consumables.length > 0 && (
                       <>
@@ -151,7 +151,7 @@ const formattedEnd = format(
                         {stay.consumables.map((c: any, i: number) => (
                           <div key={i} className="flex justify-between text-sm">
                             <span>{c.name} × {c.qty}</span>
-                            <span>${c.total.toLocaleString()}</span>
+                            <span>${c.total?.toLocaleString()}</span>
                           </div>
                         ))}
                       </>
@@ -162,7 +162,7 @@ const formattedEnd = format(
                         {stay.otherExpenses.map((e: any, i: number) => (
                           <div key={i} className="flex justify-between text-sm">
                             <span>{e.description}</span>
-                            <span>${e.amount.toLocaleString()}</span>
+                            <span>${e.amount?.toLocaleString()}</span>
                           </div>
                         ))}
                       </>
@@ -170,7 +170,7 @@ const formattedEnd = format(
                     <Separator className="border-2 border-red-200" />
                     <div className="flex justify-between text-xl font-bold">
                       <span>Total Gastos</span>
-                      <span className="text-red-600">${stay.totalCost.toLocaleString()}</span>
+                      <span className="text-red-600">${stay.totalCost?.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -179,9 +179,9 @@ const formattedEnd = format(
               {/* RESULTADO FINAL */}
               <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl p-8 text-white text-center">
                 <p className="text-2xl mb-2">GANANCIA NETA</p>
-                <p className="text-6xl font-bold">${stay.profit.toLocaleString()}</p>
+                <p className="text-6xl font-bold">${stay.profit?.toLocaleString()}</p>
                 <p className="text-3xl mt-4 opacity-90">
-                  Margen: {stay.profitMargin.toFixed(1)}%
+                  Margen: {stay.profitMargin?.toFixed(1)}%
                 </p>
               </div>
             </CardContent>
@@ -204,7 +204,7 @@ const formattedEnd = format(
           <Card className="bg-gradient-to-br from-purple-600 to-blue-600 text-white">
             <CardContent className="pt-6 text-center">
               <DollarSign className="w-16 h-16 mx-auto mb-4 opacity-80" />
-              <p className="text-4xl font-bold">${stay.profit.toLocaleString()}</p>
+              <p className="text-4xl font-bold">${stay.profit?.toLocaleString()}</p>
               <p className="text-xl mt-2">Ganancia total</p>
             </CardContent>
           </Card>

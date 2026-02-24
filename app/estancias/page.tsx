@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ArrowRight, Calendar, DollarSign, Users, TrendingUp, Plus } from 'lucide-react';
+import { ArrowRight, Calendar, DollarSign, Users, TrendingUp, Plus, ArrowLeft } from 'lucide-react';
 import { getAllStays, getMonthlySummaries } from '@/actions/stays';
 import ExportAllToPDF from '@/components/AllStaysPDF';
 
@@ -41,7 +41,15 @@ export default async function EstanciasPage() {
     <div className="container mx-auto py-10 max-w-7xl">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-4xl font-bold">Todas mis Estancias</h1>
+           <div className="flex gap-3 items-center">
+             <Link href="/">
+                      <Badge variant="outline" className="text-lg px-6 py-3">
+                        <ArrowLeft className="w-5 h-5 mr-2" />
+             
+                      </Badge>
+                    </Link>
+                       <h1 className="text-4xl font-bold">Todas mis Estancias</h1>
+           </div>
           <p className="text-muted-foreground mt-2">
             {stays.length} estancias registradas en total
           </p>
@@ -56,6 +64,11 @@ export default async function EstanciasPage() {
         </Link>
 
   <ExportAllToPDF staysByMonth={staysByMonth} monthlySummaries={monthlySummaries} />
+    {/* <Link href="/">
+            <Button size="lg" variant={'secondary'}>
+             Regresar
+            </Button>
+          </Link> */}
 </div>
       </div>
 

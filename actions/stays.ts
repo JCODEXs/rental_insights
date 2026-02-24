@@ -110,7 +110,7 @@ export async function getMonthlySummaries() {
 // actions/stays.ts
 export async function getStayById(id: string) {
   await dbConnect()
-  const stay = await Stay.findById(id)
+  const stay = await Stay.findById(id).lean();
   if (!stay) return null;
 
   return {
@@ -145,5 +145,6 @@ export async function deleteStay(formData: FormData) {
  
   const id = formData.get('id') as string;
   await Stay.findByIdAndDelete(id);
+  redirect('/estancias')
   revalidatePath('/estancias');
 }

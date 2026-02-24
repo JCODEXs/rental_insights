@@ -12,7 +12,7 @@ import TotalCharts from '@/components/TotalCharts';
 
 export default async function TotalDashboardPage() {
   const report = await getTotalReport();
-  console.log(report,"report")
+//   console.log(report,"report")
 
   if (!report) {
     return (
