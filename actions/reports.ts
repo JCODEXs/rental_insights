@@ -63,3 +63,128 @@ const staysSummary = stays.map(s => ({
     daily
   };
 }
+
+
+// Resumen Anual
+export async function getAnnualReport(year: number) {
+  await dbConnect();
+  
+  const startDate = new Date(year, 0, 1); // 1 enero
+  const endDate = new Date(year + 1, 0, 1); // 1 enero año siguiente
+  
+  const allStays = await Stay.find({
+    startDate: { $gte: startDate, $lt: endDate },
+    status: 'completed'
+  }).sort({ startDate: 1 });
+  
+  if (allStays.length === 0) return null;
+  
+  // Agrupar por mes
+  const monthlyData = Array.from({ length: 12 }, (_, i) => {
+    const monthStays = allStays.filter(stay => 
+      new Date(stay.startDate).getMonth() === i
+    );
+    
+    const totalRevenue = monthStays.reduce((sum, s) => sum + (s.netRevenue || 0), 0);
+    const totalCosts = monthStays.reduce((sum, s) => sum + (s.totalCost || 0), 0);
+    const profit = monthStays.reduce((sum, s) => sum + (s.profit || 0), 0);
+    const totalNights = monthStays.reduce((sum, s) => sum + (s.nights || 0), 0);
+    
+    return {
+      month: i + 1,
+      totalStays: monthStays.length,
+      totalNights,
+      totalRevenue,
+      totalCosts,
+      profit,
+      avgMargin: totalRevenue > 0 ? (profit / totalRevenue) * 100 : 0
+    };
+  });
+  
+  // Totales del año
+  const totalStays = allStays.length;
+  const totalNights = allStays.reduce((sum, s) => sum + (s.nights || 0), 0);
+  const totalRevenue = allStays.reduce((sum, s) => sum + (s.netRevenue || 0), 0);
+  const totalCosts = allStays.reduce((sum, s) => sum + (s.totalCost || 0), 0);
+  const profit = allStays.reduce((sum, s) => sum + (s.profit || 0), 0);
+  const avgMargin = allStays.reduce((sum, s) => sum + (s.profitMargin || 0), 0) / allStays.length;
+  
+  return {
+    year,
+    totalStays,
+    totalNights,
+    totalRevenue,
+    totalCosts,
+    profit,
+    avgMargin,
+    monthlyData,
+    // Top 5 mejores meses
+    topMonths: [...monthlyData]
+      .sort((a, b) => b.profit - a.profit)
+      .slice(0, 5)
+  };
+}
+
+// Resumen Total (histórico)
+export async function getTotalReport() {
+  await dbConnect();
+  
+  const allStays = await Stay.find({ 
+    status: 'completed' 
+  }).sort({ startDate: 1 });
+  
+  if (allStays.length === 0) return null;
+  
+  // Agrupar por año
+  const yearlyData: Record<number, any> = {};
+  
+  allStays.forEach(stay => {
+    const year = new Date(stay.startDate).getFullYear();
+    if (!yearlyData[year]) {
+      yearlyData[year] = {
+        year,
+        totalStays: 0,
+        totalNights: 0,
+        totalRevenue: 0,
+        totalCosts: 0,
+        profit: 0
+      };
+    }
+    
+    yearlyData[year].totalStays++;
+    yearlyData[year].totalNights += stay.nights || 0;
+    yearlyData[year].totalRevenue += stay.netRevenue || 0;
+    yearlyData[year].totalCosts += stay.totalCost || 0;
+    yearlyData[year].profit += stay.profit || 0;
+  });
+  
+  // Calcular margen por año
+  const yearlyArray = Object.values(yearlyData).map(y => ({
+    ...y,
+    avgMargin: y.totalRevenue > 0 ? (y.profit / y.totalRevenue) * 100 : 0
+  }));
+  
+  // Totales generales
+  const totalStays = allStays.length;
+  const totalNights = allStays.reduce((sum, s) => sum + (s.nights || 0), 0);
+  const totalRevenue = allStays.reduce((sum, s) => sum + (s.netRevenue || 0), 0);
+  const totalCosts = allStays.reduce((sum, s) => sum + (s.totalCost || 0), 0);
+  const profit = allStays.reduce((sum, s) => sum + (s.profit || 0), 0);
+  const avgMargin = allStays.reduce((sum, s) => sum + (s.profitMargin || 0), 0) / allStays.length;
+  
+  const firstStay = new Date(allStays[0].startDate);
+  const lastStay = new Date(allStays[allStays.length - 1].endDate || allStays[allStays.length - 1].startDate);
+  
+  return {
+    totalStays,
+    totalNights,
+    totalRevenue,
+    totalCosts,
+    profit,
+    avgMargin,
+    yearlyData: yearlyArray,
+    firstStayDate: firstStay,
+    lastStayDate: lastStay,
+    years: yearlyArray.length
+  };
+}

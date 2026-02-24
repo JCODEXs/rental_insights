@@ -101,7 +101,9 @@ export default function Home() {
           <SectionCard
             title="Reportes"
             description="Visualiza métricas mensuales, ingresos, gastos y utilidad con claridad ejecutiva."
-            primaryHref="/dashboard/mensual"
+            primaryHref="/dashboard/total"
+            secondaryHref="/dashboard/anual"
+            secondaryLabel="Ver Anual"
             primaryLabel="Ver Reportes"
           />
         </div>
