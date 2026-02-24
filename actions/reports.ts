@@ -1,13 +1,13 @@
 // actions/reports.ts
 'use server';
 
-import { Stay } from '@/lib/mongodb';
+import { Stay,dbConnect } from '@/lib/mongodb';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 
 export async function getMonthlyReport(year: number, month: number) {
   const start = startOfMonth(new Date(year, month - 1));
   const end = endOfMonth(start);
-
+  await dbConnect()
   const stays = await Stay.find({
     startDate: { $gte: start, $lte: end },
     status: 'completed'
