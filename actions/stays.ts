@@ -110,7 +110,8 @@ export async function getMonthlySummaries() {
 // actions/stays.ts
 export async function getStayById(id: string) {
   await dbConnect()
-  const stay = await Stay.findById(id).lean();
+  const stay = await Stay.findById(id).lean()
+  console.log(stay,"stay")
   if (!stay) return null;
 
   return {

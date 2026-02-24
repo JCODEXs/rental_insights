@@ -12,10 +12,10 @@ export async function getAllConsumables() {
 
 export async function getConsumableById(id: string) {
   await dbConnect()
-  const consumable = await Consumable.findById(id).lean();
+  const consumable = await Consumable.findById(id)
   if (!consumable) return null;
   return {
-    ...consumable,
+    ...consumable.lean(),
     _id: consumable._id.toString(),
   };
 

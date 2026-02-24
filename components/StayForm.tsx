@@ -29,6 +29,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
+import { sileo } from 'sileo';
 // import { Consumable } from '@/lib/mongodb';
 
 // En StayForm.tsx → añade este prop
@@ -43,10 +44,10 @@ export default function StayForm({ initialData, isEdit }: { initialData?: any; i
         : await createStay(data);
 
       if (result.success) {
-        alert(isEdit ? '¡Estancia actualizada!' : '¡Estancia guardada!');
+        sileo.success({ title:isEdit ? '¡Estancia actualizada!' : '¡Estancia guardada!'})
         window.location.href = '/estancias';
       } else {
-        alert('Error: ' + result.error);
+        sileo.error({title:'Error: ', description: result.error});
       }
     } catch (err) {
       alert('Error inesperado');

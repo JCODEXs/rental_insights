@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { consumableSchema, type ConsumableFormData } from '@/lib/schemas';
 import { createConsumable, updateConsumable } from '@/actions/consumables';
 import { useEffect } from 'react';
+import { sileo } from 'sileo';
 
 export default function ConsumibleForm({ initialData }: { initialData?: any }) {
   const router = useRouter();
@@ -54,11 +55,15 @@ export default function ConsumibleForm({ initialData }: { initialData?: any }) {
   }
 
     if (result.success) {
+        
+              sileo.success({ title:isEdit ? '¡Consumible actualizado!' : '¡Consumible guardado!'})
+             
+            } else {
+              sileo.error({title:'Error: ', description: result.error});}
+            
       router.push('/consumibles');
       router.refresh();
-    } else {
-      alert('Error: ' + result.error);
-    }
+   
   };
 
   return (
