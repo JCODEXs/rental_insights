@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { staySchema, type StayFormData } from '@/lib/schemas';
 import { IConsumable, IStay, Stay,dbConnect } from '@/lib/mongodb'; // <-- este archivo lo creamos en el paso 3
 import { redirect } from 'next/navigation';
+import { sileo } from 'sileo';
 
 export async function createStay(data: StayFormData) {
   try {

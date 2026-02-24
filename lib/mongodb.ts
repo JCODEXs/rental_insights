@@ -31,6 +31,7 @@ export async function dbConnect() {
 // 1. CONSUMABLE (maestro de consumibles)
 // =============================================
 export interface IConsumable extends Document {
+  _id: Types.ObjectId;
   name: string;
   unit: string;
   unitCost: number;

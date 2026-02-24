@@ -12,14 +12,10 @@ export default async function ConsumiblesPage() {
   return (
     <div className="container mx-auto py-10 max-w-6xl">
       <div className="flex justify-between items-center mb-8">
-         <div className="flex gap-3 items-center">
-                <Link href="/">
-                  <Badge variant="outline" className="p-3">
-                    <ArrowLeft className="w-6 h-6" />
-                  </Badge>
-                </Link>
+      
+        
         <h1 className="text-4xl font-bold">Consumibles Maestros</h1>
-        </div>
+        
         <Link href="/consumibles/nuevo">
           <Button size="lg">
             <Plus className="w-5 h-5 mr-2" />
