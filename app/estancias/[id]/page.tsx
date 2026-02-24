@@ -82,7 +82,7 @@ const formattedEnd = format(
 </p>
                 </div>
                 <Badge variant={stay.channel === 'directo' ? 'default' : 'secondary'} className="text-lg px-4">
-                  {stay.channel.toUpperCase()}
+                  {stay?.channel?.toUpperCase()}
                 </Badge>
               </div>
             </CardHeader>
@@ -93,14 +93,14 @@ const formattedEnd = format(
                     <Users className="w-4 h-4" />
                     Huéspedes
                   </p>
-                  <p className="text-3xl font-bold">{stay.guests}</p>
+                  <p className="text-3xl font-bold">{stay?.guests}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
                     <Calendar className="w-4 h-4" />
                     Noches
                   </p>
-                  <p className="text-3xl font-bold">{stay.nights}</p>
+                  <p className="text-3xl font-bold">{stay?.nights}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Ingreso por noche</p>
